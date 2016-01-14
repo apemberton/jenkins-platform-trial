@@ -1,7 +1,7 @@
 FROM alpine:3.3
 
 RUN apk add --no-cache curl wget bash py-pip py-yaml \
- && pip install -U pip docker-compose==1.5.1
+ && pip install -U pip docker-compose==1.5.2
  
 ENV DOCKER_BUCKET get.docker.com
 ENV DOCKER_VERSION 1.9.1
@@ -12,5 +12,6 @@ RUN curl -fSL "https://${DOCKER_BUCKET}/builds/Linux/x86_64/docker-$DOCKER_VERSI
  && chmod +x /usr/local/bin/docker
 
 COPY docker-compose.yml .
+COPY entrypoint.sh /usr/local/bin/
 
-CMD ["docker-compose","up","-d"]
+ENTRYPOINT ["entrypoint.sh"]
