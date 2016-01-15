@@ -149,7 +149,7 @@ def applyEnvironmentVariables = { slave ->
 }
 
 def createComputerLauncher = { host ->
-    def connectionDetails = new SSHConnectionDetails(builtInCredentialsId, 22, "java", "\$JAVA_OPTS", ". .bashrc && ", "", false)
+    def connectionDetails = new SSHConnectionDetails(builtInCredentialsId, 22, "", "", "", "", false)
     return new SSHLauncher(host, connectionDetails)
 }
 
