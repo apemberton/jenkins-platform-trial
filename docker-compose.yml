@@ -2,14 +2,22 @@ cjoc:
     image: cloudbees/jenkins-operations-center:1.625.3.1
     container_name: cjoc
     volumes:
-        - cjp-trial-data-joc:/usr/share/jenkins/ref/init.groovy.d
+        - cjp-trial-data-cjoc:/usr/share/jenkins/ref
     environment:
-        JENKINS_URL: "${JENKINS_URL}"
+        JENKINS_URL: "http://${JENKINS_IP}"
 cje1:
     image: cloudbees/jenkins-enterprise:1.625.3.1
     container_name: cje1
+    volumes:
+        - cjp-trial-data-cje:/usr/share/jenkins/ref
     environment:
+        JENKINS_URL: "http://${JENKINS_IP}/cje1"
         JENKINS_OPTS: --prefix=/cje1
+        JAVA_OPTS: "-DMASTER_ENDPOINT=http://${JENKINS_IP}/cje1 -DMASTER_OPERATIONSCENTER_ENDPOINT=http://${JENKINS_IP} -DMASTER_INDEX=0 -DMASTER_NAME=jenkins-0%20(built-in) -DMASTER_GRANT_ID=jenkins-0"
+slave1:
+    image: kmadel/jenkins-slave:1.1
+    container_name: slave1
+    restart: always
 proxy:
     image: kmadel/haproxy:cjp-trial
     ports:

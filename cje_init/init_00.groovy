@@ -14,11 +14,7 @@ if (disableScript.exists()) {
 
 Thread.start {
       sleep 10000
-      
-      println "--> setting agent port for ssh"
-      def sshd = SSHD.get()
-      sshd.port = env['JENKINS_SSH_PORT'].toInteger()
-      println "--> setting agent port for ssh... done"
+      def env = System.getenv()
 
       println "--> setting location config url"
       JenkinsLocationConfiguration locationConfiguration = JenkinsLocationConfiguration.get()
